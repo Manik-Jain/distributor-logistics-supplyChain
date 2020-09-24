@@ -1,14 +1,16 @@
 const Company = require('../model/Company.js');
-const companyDao = require('../dao/CompanyDao.js');
+const CompanyDao = require('../dao/CompanyDao.js');
+
+var companyDao = new CompanyDao();
 
 module.exports = class CompanyService {
 
     constructor(){}
 
-    async function addNewCompany(userInput) {
+    async addNewCompany(userInput) {
         try {
             let company = Object.assign(userInput, new Company());
-            await companyDao.addNewCompany(company);
+            await companyDao.addCompany(company);
             return company.id;
         } catch(error) {
             return error;
