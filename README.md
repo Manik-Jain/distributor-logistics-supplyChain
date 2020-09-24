@@ -4,5 +4,5 @@ Blockchain backed supply chain management built in Express JS and Firebase, prov
 
 Features supported :
 
-Add new company node : POST /company
-Update company node : PUT /company/:id
+1. Add new company node : POST /company
+2. Update company node  : PUT /company/:id
