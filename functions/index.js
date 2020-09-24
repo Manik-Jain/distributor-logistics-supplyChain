@@ -15,4 +15,6 @@ const webApi = getAPI(main);
 module.exports = {webApi};
 
 const companyRoutes = require('./src/routes/company');
+const biddingRoutes = require('./src/routes/bidding');
 app.use('/company', companyRoutes);
+app.use('/bidding', biddingRoutes);
