@@ -17,17 +17,18 @@ main.use(bodyParser.json());
 main.use(bodyParser.urlencoded({extended : false}));
 
 const Company  = require('./model/Company.js');
+const companyService = require('./service/CompanyService.js');
 
 //enable API to accept requests
 const webApi = functions.https.onRequest(main);
 module.exports = {webApi};
 
 //add a new Company
-app.post('/company', (req, res) => {
+app.post('/company', async (req, res) => {
     try {
-        var company = new Company(uuidv4(), req.body);
-        db.collection(companies).doc(company.id).set(JSON.parse(JSON.stringify(company)));
-        res.status(200).send(`Successfully added company ${company.id}`);
+        let company = Object.assign(req.body, new Company());
+        await db.collection(companies).doc(company.id).set(company);
+        res.status(201).send(`Successfully added company ${company.id}`);
     } catch(error) {
         console.log(error);
         res.status(400).send(error);
