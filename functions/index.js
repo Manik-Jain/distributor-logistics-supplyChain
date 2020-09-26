@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {getAPI, initApp} = require('./src/config/firebase');
+const {
+    getAPI, 
+    initApp
+} = require('./src/config/firebase');
 
 initApp();
 
@@ -15,4 +18,9 @@ const webApi = getAPI(main);
 module.exports = {webApi};
 
 const companyRoutes = require('./src/routes/company');
+const biddingRoutes = require('./src/routes/bidding');
+const quotationRoutes = require('./src/routes/quotation');
+
 app.use('/company', companyRoutes);
+app.use('/bidding', biddingRoutes);
+app.use('/quotation', quotationRoutes);

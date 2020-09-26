@@ -27,4 +27,7 @@ const updateCompany = async(req, res) => {
     }
 }
 
-module.exports={addCompany, updateCompany};
+module.exports={
+    addCompany, 
+    updateCompany
+};
