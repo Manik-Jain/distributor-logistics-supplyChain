@@ -1,9 +1,14 @@
 const express = require('express');
-const {createBiddingPoll} = require('../controller/biddingPoll');
+const {
+    createBiddingPoll, 
+    updateBiddingPoll, 
+    getActiveBiddings
+} = require('../controller/biddingPoll');
 
 const router = express.Router();
 
 router.post('/', createBiddingPoll);
-//router.get('/', getActiveBiddings);
+router.put('/', updateBiddingPoll);
+router.get('/', getActiveBiddings);
 
 module.exports = router;
