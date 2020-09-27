@@ -2,12 +2,12 @@ const {getDb} = require('../config/firebase');
 
 const db = getDb();
 const quotations = "quotations";
+const orders = "orders";
 
 const functions = require("firebase-functions");
 
 const create = async(quotation) => {
-    functions.logger.log('quotation', quotation);
-    await db.collection(quotations).doc(quotation.id).set(quotation); 
+    await db.collection('orders').doc(quotation.id).set(quotation); 
 }
 
 const update = async(userInput) => {

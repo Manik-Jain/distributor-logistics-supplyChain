@@ -1,18 +1,29 @@
 const {getDb} = require('../config/firebase');
 
 const db = getDb();
-const orders = "orders";
+const deliveryOrders = "deliveryOrders";
 
-const createOrder = async(order) => {
-    await db.collection(orders).doc(order.id).set(order); 
+const createDeliveryOrder = async(deliveryOrder) => {
+    await db.collection(deliveryOrders).doc(deliveryOrder.id).set(deliveryOrder); 
 }
 
-const updateOrder = async(userInput) => {
-    const order = db.collection(orders).doc(userInput.id);
-    await order.set(userInput, {merge : true});
+const updateOrderStatus = async(userInput) => {
+    const deliveryOrder = db.collection(deliveryOrders).doc(userInput.id);
+    await deliveryOrder.set(userInput, {merge : true});
+}
+
+const trackOrder = async(id) => {
+    return await db.collection(deliveryOrders).doc(id).get();
+}
+
+const updateRating = async(userInput) => {
+    const deliveryOrder = db.collection(deliveryOrders).doc(userInput.order_id);
+    await deliveryOrder.set(userInput, {merge : true});
 }
 
 module.exports = {
-    createOrder, 
-    updateOrder
+    createDeliveryOrder, 
+    updateOrderStatus,
+    trackOrder,
+    updateRating
 };

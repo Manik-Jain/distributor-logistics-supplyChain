@@ -40,9 +40,9 @@ const getActiveBiddings = async(req, res) => {
         let biddings = [];
         const results = await getBidding();
         results.forEach(element => {
-            //if(element.data.status === 'open') {
+            if(element.data().status === 'open') {
                 biddings.push(element.data());
-            //}
+            }
         });
         res.status(200).send(biddings);
     } catch(error){
