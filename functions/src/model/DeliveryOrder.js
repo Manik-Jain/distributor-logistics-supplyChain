@@ -1,6 +1,6 @@
 const {v4 : uuidv4} = require('uuid');
 
-module.exports = class Order {
+module.exports = class DeliveryOrder {
 
     constructor() {
         this.id = uuidv4();

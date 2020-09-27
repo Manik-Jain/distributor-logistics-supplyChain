@@ -1,11 +1,13 @@
 //const functions = require("firebase-functions");
 const Quotation = require('../model/Quotation');
-const Order = require('../model/Order');
+const DeliveryOrder = require('../model/DeliveryOrder');
+const Invoice = require('../model/Invoice');
 const {create:create} = require('../dao/OrderQuotationDao');
 const {update:update} = require('../dao/OrderQuotationDao');
 const {getQuotation : getQuotation} = require('../dao/OrderQuotationDao');
-const {createOrder : createOrder} = require('../dao/OrderDao');
 const {getBid : getBid} = require('../dao/BiddingPollDao');
+
+const {addDeliveryOrder, generateInvoice} = require('../service/orderService');
 
 const functions = require('firebase-functions');
 
@@ -47,12 +49,13 @@ const updateQuotation = async(req, res) => {
             if(result.data().status === 'confirmed') {
                 res.status(400).json({id : id, message : 'quotation already confirmed'});
             } else {
-                let order = new Order();
-                functions.logger.log('Order', order);
+                let deliveryOrder = Object.assign({quotationId : req.body.id}, new DeliveryOrder());
+                let deliveryInvoice = Object.assign({order_id : deliveryOrder.id}, new Invoice());
                 await update(req.body);
-                //await createOrder(order);
+                await addDeliveryOrder(deliveryOrder);
+                await generateInvoice(deliveryInvoice);
                 res.status(200).json({
-                    message : 'bidding updated successfully!!'
+                    message : `bidding updated successfully!! Order id ${deliveryOrder.id} has been generated`
                 });
             }   
         }
