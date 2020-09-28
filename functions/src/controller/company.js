@@ -1,6 +1,8 @@
 const Company = require('../model/Company.js');
 const {create:create} = require('../dao/ComapnyDao');
 const {update:update} = require('../dao/ComapnyDao');
+const {getAll:getAll} = require('../dao/ComapnyDao');
+const {getByID:getByID} = require('../dao/ComapnyDao');
 
 //add a new company
 const addCompany = async(req, res) => {
@@ -27,7 +29,45 @@ const updateCompany = async(req, res) => {
     }
 }
 
+//view all companies
+const getAllCompanies = async(req, res) => { 
+    try {
+        let allCompanies = [];
+        const results = await getAll();
+        results.forEach(element => {
+            allCompanies.push(element.data());
+        });        
+        res.status(200).send(allCompanies);
+
+    } catch(error) { // handle errors
+        res.status(500).json({
+            error: error 
+        });
+    }
+}
+
+//view company by id
+const getCompanyByID = async(req, res) => { 
+    try {
+        const companyID = req.params.id;
+        const company = await getByID(companyID);
+        
+        if(!company.exists) {
+            res.status(404).send(`error: user ${companyID} does not exist`);
+        }
+
+        res.status(200).send(company.data());
+
+    } catch(error) { // handle errors
+        res.status(500).json({
+            error: error 
+        });
+    }
+}
+
 module.exports={
     addCompany, 
-    updateCompany
+    updateCompany,
+    getAllCompanies,
+    getCompanyByID
 };
