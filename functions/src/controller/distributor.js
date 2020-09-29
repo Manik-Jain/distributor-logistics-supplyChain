@@ -1,6 +1,7 @@
 const Distributor = require('../model/Distributor');
 const {create:create} = require('../dao/DistributorDao');
 const {update:update} = require('../dao/DistributorDao');
+const {getByID:getByID} = require('../dao/DistributorDao');
 
 /**
  * Add a new distributor to the system
@@ -35,20 +36,17 @@ const updateDistributor = async(req, res) => {
     }
 }
 
-<<<<<<< HEAD
-
 //view distrbutor by id
 const getDistributorByID = async(req, res) => { 
     try {
-        const distributorID = req.params.id;
-        const distributor = await getByID(distrbutorID);
+        const distributorId = req.params.id;
+        const distributor = await getByID(distributorId);
         
         if(!distributor.exists) {
-            res.status(404).send(`error: user ${distributorID} does not exist`);
+            res.status(404).send(`error: user ${distributorId} does not exist`);
+        } else {
+            res.status(200).send(distributor.data());
         }
-
-        res.status(200).send(distributor.data());
-
     } catch(error) { // handle errors
         res.status(500).json({
             error: error 
@@ -56,11 +54,8 @@ const getDistributorByID = async(req, res) => {
     }
 }
 
-module.exports={
-    addDistributor, updateDistributor,getDistributorByID
-=======
-module.exports={
-    addDistributor, 
-    updateDistributor
->>>>>>> 3b118506715c9ae3686797b5ef6b3fca7a087d00
-};
+module.exports = {
+    addDistributor,
+    updateDistributor,
+    getDistributorByID
+}
