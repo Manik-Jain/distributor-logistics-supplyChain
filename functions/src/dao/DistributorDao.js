@@ -12,4 +12,11 @@ const update = async(distributorId, userInput) => {
     await distributor.set(userInput, {merge : true});
 }
 
+const getByID = async (distributorID) => {
+     // asynchronously fetch distributors from the database
+    const distributor = await db.collection(distributors).doc(distributorId).get();
+
+    return distrbutor;
+};
+
 module.exports = {create, update};
