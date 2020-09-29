@@ -1,4 +1,5 @@
 const express = require('express');
+
 const {
     addDistributor, 
     updateDistributor
@@ -7,6 +8,6 @@ const {
 const router = express.Router();
 
 router.post('/', addDistributor);
-router.put( '/:id' updateDistributor);
+router.put( '/:id', updateDistributor);
 
 module.exports = router;

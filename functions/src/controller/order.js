@@ -38,9 +38,13 @@ const updateStatus = async (req, res) => {
         invoice.status = req.body.status;
         invoice.transactions.push(transaction);
 
+        //handle order status
         await updateOrderStatus(req.body);
         await updateInvoice(invoice);
         //escrow call here
+
+
+        
 
         res.status(200).send({
             id: req.body.id,

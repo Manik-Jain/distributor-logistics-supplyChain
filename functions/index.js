@@ -21,8 +21,10 @@ const companyRoutes = require('./src/routes/company');
 const biddingRoutes = require('./src/routes/bidding');
 const quotationRoutes = require('./src/routes/quotation');
 const orderRoutes = require('./src/routes/order');
+const distributorRoutes = require('./src/routes/distributor');
 
 app.use('/company', companyRoutes);
+app.use('/distributor', distributorRoutes);
 app.use('/bidding', biddingRoutes);
 app.use('/quotation', quotationRoutes);
 app.use('/order', orderRoutes);
