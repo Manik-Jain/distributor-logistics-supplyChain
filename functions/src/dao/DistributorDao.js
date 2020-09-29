@@ -8,10 +8,11 @@ const create = async(distributor) => {
 }
 
 const update = async(distributorId, userInput) => {
-    const distrbutor = db.collection(distributors).doc(distributorId);
-    await distributor.set(userInput, {merge : true});
+    const distributor = db.collection(distributors).doc(distributorId);
+    await distributor.set(userInput, { merge : true });
 }
 
+<<<<<<< HEAD
 const getByID = async (distributorID) => {
      // asynchronously fetch distributors from the database
     const distributor = await db.collection(distributors).doc(distributorId).get();
@@ -20,3 +21,9 @@ const getByID = async (distributorID) => {
 };
 
 module.exports = {create, update};
+=======
+module.exports = {
+    create, 
+    update
+};
+>>>>>>> 3b118506715c9ae3686797b5ef6b3fca7a087d00
