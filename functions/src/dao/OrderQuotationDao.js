@@ -1,8 +1,9 @@
 const {getDb} = require('../config/firebase');
+const {quotations, orders} = require ('../config/const');
 
 const db = getDb();
-const quotations = "quotations";
-const orders = "orders";
+//const quotations = "quotations";
+//const orders = "orders";
 
 const functions = require("firebase-functions");
 

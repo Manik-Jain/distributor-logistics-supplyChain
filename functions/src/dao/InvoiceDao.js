@@ -1,7 +1,8 @@
 const {getDb} = require('../config/firebase');
+const {deliveryInvoices} = require ('../config/const');
 
 const db = getDb();
-const deliveryInvoices = "deliveryInvoices";
+//const deliveryInvoices = "deliveryInvoices";
 
 const createDeliveryInvoice = async(deliveryInvoice) => {
     await db.collection(deliveryInvoices).doc(deliveryInvoice.id).set(deliveryInvoice); 

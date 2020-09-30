@@ -1,7 +1,8 @@
 const {getDb} = require('../config/firebase');
+const {companies} = require ('../config/const');
 
 const db = getDb();
-const companies = "companies";
+//const companies = "companies";
 
 const create = async(company) => {
     await db.collection(companies).doc(company.id).set(company);

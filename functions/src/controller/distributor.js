@@ -9,6 +9,7 @@ const {update:update} = require('../dao/DistributorDao');
  * req.body : which should be a json containing {name : value} pair
  * The system will be default generate the other details.
  * */
+
 const addDistributor = async(req, res) => {
     try{
         let distributor = Object.assign(req.body, new Distributor()); 
@@ -22,7 +23,13 @@ const addDistributor = async(req, res) => {
     }
 }
 
-//update an existing distributor
+/**
+ * Update an existing distributor to the system
+ * 
+ * The user is expected to change the name of the existing distributor
+ * req.body : which should be a json containing {name : value} pair
+ * */
+
 const updateDistributor = async(req, res) => {
     try{
         await update(req.params.id, req.body);
@@ -37,7 +44,13 @@ const updateDistributor = async(req, res) => {
 
 <<<<<<< HEAD
 
-//view distrbutor by id
+/**
+* view distrbutor by id 
+* 
+* The user is expected to provide the id
+* The system will return the name, rating and id
+**/
+
 const getDistributorByID = async(req, res) => { 
     try {
         const distributorID = req.params.id;

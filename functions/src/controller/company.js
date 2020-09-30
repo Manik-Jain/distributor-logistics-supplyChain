@@ -4,7 +4,14 @@ const {update:update} = require('../dao/ComapnyDao');
 const {getAll:getAll} = require('../dao/ComapnyDao');
 const {getByID:getByID} = require('../dao/ComapnyDao');
 
-//add a new company
+/**
+ * Add a new logistics company to the system
+ * 
+ * The user is expected to provide the name of the comoany 
+ * req.body : which should be a json containing {name : value} pair
+ * The system will be default generate the other details.
+ * */
+
 const addCompany = async(req, res) => {
     try{
         let company = Object.assign(req.body, new Company()); 
@@ -16,8 +23,13 @@ const addCompany = async(req, res) => {
         res.status(400).json({error : error});
     }
 }
+/**
+ * Update an existing logistics company to the system
+ * 
+ * The user is expected to change the name of the existing company
+ * req.body : which should be a json containing {name : value} pair
+ * */
 
-//update an existing company
 const updateCompany = async(req, res) => {
     try{
         await update(req.params.id, req.body);
@@ -30,6 +42,7 @@ const updateCompany = async(req, res) => {
 }
 
 //view all companies
+
 const getAllCompanies = async(req, res) => { 
     try {
         let allCompanies = [];
@@ -46,7 +59,12 @@ const getAllCompanies = async(req, res) => {
     }
 }
 
-//view company by id
+/**
+* view logistics company  by id 
+* 
+* The user is expected to provide the id
+* The system will return the name, rating and id
+**/
 const getCompanyByID = async(req, res) => { 
     try {
         const companyID = req.params.id;

@@ -1,7 +1,8 @@
 const {getDb} = require('../config/firebase');
+const {distributors} = require ('../config/const');
 
 const db = getDb();
-const distributors = "distributors";
+//const distributors = "distributors";
 
 const create = async(distributor) => {
     await db.collection(distributors).doc(distributor.id).set(distributor); 

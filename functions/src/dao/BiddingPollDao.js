@@ -1,7 +1,8 @@
 const {getDb} = require('../config/firebase');
+const {biddingPoll} = require ('../config/const');
 
 const db = getDb();
-const biddingPoll = "biddingPoll";
+//const biddingPoll = "biddingPoll";
 
 const createBidding = async(bidding) => {
     await db.collection(biddingPoll).doc(bidding.id).set(bidding); 
