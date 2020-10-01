@@ -1,6 +1,7 @@
 const {createBidding:createBidding} = require('../dao/BiddingPollDao');
 const {updateBidding:updateBidding} = require('../dao/BiddingPollDao');
 const {getBidding:getBidding} = require('../dao/BiddingPollDao');
+const {getBid:getBid} = require('../dao/BiddingPollDao');
 const Bidding = require('../model/Bidding.js');
 
 //create a new bidding
@@ -50,8 +51,28 @@ const getActiveBiddings = async(req, res) => {
     }
 }
 
+//view Bidding by id
+const getBiddingByID = async(req, res) => { 
+    try {
+        const biddingID = req.params.id;
+        const bidding = await getBid(biddingID);
+        
+        if(!bidding.exists) {
+            res.status(404).send(`error: user ${biddingID} does not exist`);
+        }
+
+        res.status(200).send(bidding.data());
+
+    } catch(error) { // handle errors
+        res.status(500).json({
+            error: error 
+        });
+    }
+}
+
 module.exports={
     createBiddingPoll, 
     updateBiddingPoll, 
-    getActiveBiddings
+    getActiveBiddings,
+    getBiddingByID
 };
