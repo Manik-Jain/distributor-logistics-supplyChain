@@ -3,6 +3,7 @@ const DeliveryOrder = require('../model/DeliveryOrder');
 const { updateOrderStatus: updateOrderStatus} = require('../dao/OrderDao');
 const {trackOrder:trackOrder} = require('../dao/OrderDao');
 const {updateRating:updateRating} = require('../dao/OrderDao');
+const {getQuotation:getQuotation} = require('../dao/OrderQuotationDao');
 
 const { addDeliveryOrder, getInvoiceByOrderId, updateInvoice } = require('../service/orderService');
 
@@ -37,15 +38,23 @@ const updateStatus = async (req, res) => {
         let transaction = { id: uuidv4(), status: req.body.status };
         invoice.status = req.body.status;
         invoice.transactions.push(transaction);
-
-        //handle order status
-        await updateOrderStatus(req.body);
-        await updateInvoice(invoice);
-        //escrow call here
-
-
         
+        let deliveryOrder = await trackOrder(req.body.id);
+        const orderObj = deliveryOrder.data();
+        let quotation = await getQuotation(orderObj.quotationId);
+        const quotationObj = quotation.data();
+        let quotationPrice = quotationObj.quoted_price;
 
+        if(req.body.status === 'pickup') {
+            
+            await updateOrderStatus(req.body);
+            await updateInvoice(invoice);
+            //escrow call here
+        } else if(req.body.status === 'delivered') {
+            await updateOrderStatus(req.body);
+            await updateInvoice(invoice);
+        } 
+        
         res.status(200).send({
             id: req.body.id,
             message: `order updated succesfully to ${req.body.status}`,

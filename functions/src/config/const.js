@@ -5,6 +5,15 @@ const deliveryInvoices = "deliveryInvoices";
 const deliveryOrders = "deliveryOrders";
 const quotations = "quotations";
 const orders = "orders";
-const initPrivateKey = new Array()
+const initPrivateKey = [];
 
-module.exports = {biddingPoll,companies,distributors,deliveryInvoices,deliveryOrders,  quotations,orders};
+module.exports = {
+    biddingPoll,
+    companies,
+    distributors,
+    deliveryInvoices,
+    deliveryOrders,  
+    quotations,
+    orders,
+    initPrivateKey
+};

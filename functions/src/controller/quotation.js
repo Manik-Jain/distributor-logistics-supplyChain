@@ -9,6 +9,10 @@ const {getBid : getBid} = require('../dao/BiddingPollDao');
 
 const {addDeliveryOrder, generateInvoice} = require('../service/orderService');
 
+//smart contract
+const web3Config = require('../config/web3Config');
+const deploySmartContract = require('../smartContract/smartContract');
+
 const functions = require('firebase-functions');
 
 //add a new quotation to database
@@ -65,6 +69,12 @@ const updateQuotation = async(req, res) => {
 }
 
 const getQuotations = async(req, res) => {
+    try {
+        const web3 = await web3Config();
+        await deploySmartContract(web3, 0);
+    } catch(error) {
+        res.status(400).json({error : error});
+    }
 
 }
 

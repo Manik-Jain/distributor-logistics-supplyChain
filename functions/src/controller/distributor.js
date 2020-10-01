@@ -43,19 +43,12 @@ const updateDistributor = async(req, res) => {
     }
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 /**
 * view distrbutor by id 
 * 
 * The user is expected to provide the id
 * The system will return the name, rating and id
 **/
-
-=======
-//view distrbutor by id
->>>>>>> 556c73e40ed289db29a5b402c4fede23df319eb5
 const getDistributorByID = async(req, res) => { 
     try {
         const distributorId = req.params.id;
@@ -66,7 +59,7 @@ const getDistributorByID = async(req, res) => {
         } else {
             res.status(200).send(distributor.data());
         }
-    } catch(error) { // handle errors
+    } catch(error) {
         res.status(500).json({
             error: error 
         });
