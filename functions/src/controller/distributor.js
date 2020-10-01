@@ -26,11 +26,19 @@ const addDistributor = async(req, res) => {
 //update an existing distributor
 const updateDistributor = async(req, res) => {
     try{
-        await update(req.params.id, req.body);
-        res.status(200).json({
-            id : req.params.id, 
+        const distributorId = req.params.id;
+        const distributor = await getByID(distributorId);
+        
+        if(!distributor.exists) {
+            res.status(404).send(`error: user ${distributorId} does not exist`);
+        } else {
+            await update(distributorId, req.body);
+            res.status(200).json({
+            id : distributorId, 
             message : 'distributor updated successfully'
-        })
+            })
+        }
+        
     } catch(error) {
         res.status(500).json({error : error});
     }

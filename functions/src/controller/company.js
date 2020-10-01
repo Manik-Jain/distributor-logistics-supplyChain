@@ -20,10 +20,18 @@ const addCompany = async(req, res) => {
 //update an existing company
 const updateCompany = async(req, res) => {
     try{
-        await update(req.params.id, req.body);
-        res.status(200).json({
-            id : req.params.id, message : 'company updated successfully'
-        })
+        const companyID = req.params.id;
+        const company = await getByID(companyID);
+        
+        if(!company.exists) {
+            res.status(404).send(`error: user ${companyID} does not exist`);
+        } else{
+            await update(companyID, req.body);
+            res.status(200).json({
+                id : companyID, message : 'company updated successfully'
+            })
+        }
+        
     } catch(error) {
         res.status(500).json({error : error});
     }

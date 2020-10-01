@@ -21,15 +21,24 @@ const createBiddingPoll = async(req, res) => {
 //possible values ['open', 'on-hold', 'recalled', 'closed']
 const updateBiddingPoll = async(req, res) => {
     try {
-        let status = req.body.status;
-        var allowedStatus = ['open', 'on-hold', 'recalled', 'closed'];
-        if(!allowedStatus.includes(status)) {
-            res.status(400).json({message : 'invalid status'});
-        } 
-        await updateBidding(req.body);
-        res.status(200).json({
-            id : req.body.id, message : 'bidding updated successfully'
-        });
+        const biddingID = req.body.id;
+        const bidding = await getBid(biddingID);
+        
+        if(!bidding.exists) {
+            res.status(404).send(`error: bidding ${biddingID} does not exist`);
+        } else {
+            let status = req.body.status;
+            var allowedStatus = ['open', 'on-hold', 'recalled', 'closed'];
+            if(!allowedStatus.includes(status)) {
+                res.status(400).json({message : 'invalid status'});
+            } 
+            await updateBidding(req.body);
+            res.status(200).json({
+                id : biddingID, message : 'bidding updated successfully'
+            });
+
+        }
+        
     } catch(error) {
         res.status(400).json({error : error});
     }
@@ -58,7 +67,7 @@ const getBiddingByID = async(req, res) => {
         const bidding = await getBid(biddingID);
         
         if(!bidding.exists) {
-            res.status(404).send(`error: user ${biddingID} does not exist`);
+            res.status(404).send(`error: bidding ${biddingID} does not exist`);
         }
 
         res.status(200).send(bidding.data());
